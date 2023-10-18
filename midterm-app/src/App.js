@@ -1,58 +1,72 @@
-/*import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-*/
-
 import React, { useState } from 'react';
 
 function App() {
-  const [formData, setFormData] = useState({
+  const defaultFormData = {
     name: '',
     description: '',
     category: '',
     quantity: '',
     price: '',
-  });
+  };
 
-  const handleInputChange = (e) => {
+  const [formData, setFormData] = useState(defaultFormData);
+
+  const onInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(JSON.stringify(formData, null, 2));
+
+    const alertMessage =
+    "Name: " + formData.name 
+    + "\n" +
+    "Description: " + formData.description 
+    + "\n" +
+    "Category: " + formData.category 
+    + "\n" +
+    "Quantity: " + formData.quantity 
+    + "\n" +
+    "Price: " + formData.price;
+
+    window.alert(alertMessage);
+    setFormData(defaultFormData);
   };
 
   const handleCancel = () => {
-    console.log('Form canceled');
+    setFormData(defaultFormData);
   };
 
   return (
-    <div>
-      <h1>New Product</h1>
+    <div className='form-container'>
+      <h1 className='form-header'>New Product</h1>
       <form onSubmit={handleSubmit}>
-        {/* ... (input fields, buttons, and labels go here) */}
+        <div>
+          <label></label>
+          <input placeholder='Name' type='text' name='name' value={formData.name} onChange={onInputChange} 
+          className='form-control'/>
+
+          <label></label>
+          <input placeholder='Description' type='text' name='description' value={formData.description} onChange={onInputChange} 
+          className='form-control'/>
+
+          <label></label>
+          <input placeholder='Category' type='text' name='category' value={formData.category} onChange={onInputChange}
+          className='form-control'/>
+
+          <label></label>
+          <input placeholder='Quantity' type='text' name='quantity' value={formData.quantity} onChange={onInputChange}
+          className='form-control'/>
+
+          <label></label>
+          <input placeholder='Price' type='text' name='price' value={formData.price} onChange={onInputChange}
+          className='form-control'/>
+        </div>
+        <div>
+          <button id='submit-button' type="submit">Submit</button>
+          <button id='cancel-button' type='button' onClick={handleCancel}>Cancel</button>
+        </div>
       </form>
     </div>
   );
